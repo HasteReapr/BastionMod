@@ -1,0 +1,72 @@
+ManifestFileVersion: 0
+CRC: 2132618180
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2de023938c94b66cc62cfadb1f884418
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 91f2a88d0df6b37899a95c1d98e54ef6
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: -226763392, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 114
+  Script: {fileID: -1124653335, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 136
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 319
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: RoR2
+  ClassName: ChildLocator/NameTransformPair
+Assets:
+- Assets/BastionAssets/BastionBundle/Animation/animBastionMenu.controller
+- Assets/BastionAssets/BastionBundle/displayBastion.prefab
+- Assets/BastionAssets/BastionBundle/Materials/matBastion.mat
+- Assets/BastionAssets/BastionBundle/Textures/Icons/Primary.png
+- Assets/BastionAssets/BastionBundle/Textures/Icons/Assault Primary.png
+- Assets/BastionAssets/BastionBundle/Textures/Icons/grenade.png
+- Assets/BastionAssets/BastionBundle/Animation/MaskPitch.mask
+- Assets/BastionAssets/BastionBundle/Animation/UpperBody.mask
+- Assets/BastionAssets/BastionBundle/Textures/Icons/utility.png
+- Assets/BastionAssets/BastionBundle/Textures/texBastionBirdDiffuse.png
+- Assets/BastionAssets/BastionBundle/Textures/texBastionDiffuse.png
+- Assets/BastionAssets/BastionBundle/Textures/Icons/assault utitlity.png
+- Assets/BastionAssets/BastionBundle/Animation/animBastion.controller
+- Assets/BastionAssets/BastionBundle/Textures/texBastionBirdNormal.png
+- Assets/BastionAssets/BastionBundle/Textures/texBastionEmission.png
+- Assets/BastionAssets/BastionBundle/Textures/texBastionBirdEmission.png
+- Assets/BastionAssets/BastionBundle/Materials/matBastionHeal.mat
+- Assets/BastionAssets/BastionBundle/Textures/Icons/heal.png
+- Assets/BastionAssets/BastionBundle/mdlBastion.prefab
+- Assets/BastionAssets/BastionBundle/Materials/matGanamede.mat
+- Assets/BastionAssets/BastionBundle/Textures/texBastionNormal.png
+- Assets/BastionAssets/BastionBundle/Textures/texHealRingDiffuse.png
+- Assets/BastionAssets/BastionBundle/Textures/Icons/Special.png
+- Assets/BastionAssets/BastionBundle/Animation/MaskYaw.mask
+Dependencies: []
