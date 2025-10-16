@@ -2,7 +2,6 @@
 using BastionMod.Modules;
 using BastionMod.Modules.Characters;
 using BastionMod.Survivors.Bastion.SkillStates;
-using BastionMod.Survivors.Bastion.Components;
 using RoR2;
 using RoR2.Skills;
 using System;
@@ -119,7 +118,7 @@ namespace BastionMod.Survivors.Bastion
         {
             Prefabs.ClearEntityStateMachines(bodyPrefab);
 
-            Prefabs.AddMainEntityStateMachine(bodyPrefab, "Body", typeof(BastionMainState), typeof(EntityStates.SpawnTeleporterState));
+            Prefabs.AddMainEntityStateMachine(bodyPrefab, "Body", typeof(EntityStates.GenericCharacterMain), typeof(EntityStates.SpawnTeleporterState));
 
             Prefabs.AddEntityStateMachine(bodyPrefab, "Bastion");
         }
@@ -139,7 +138,7 @@ namespace BastionMod.Survivors.Bastion
         {
             Skills.CreateGenericSkillWithSkillFamily(bodyPrefab, SkillSlot.Primary);
 
-            SkillDef primarySkillDef = Skills.CreateSkillDef<SkillDef>(new SkillDefInfo
+            SteppedSkillDef primarySkillDef = Skills.CreateSkillDef<SteppedSkillDef>(new SkillDefInfo
             {
                 skillName = "BastionReconPrimary",
                 skillNameToken = Bastion_PREFIX + "PRIMARY_RECON_NAME",
@@ -148,26 +147,50 @@ namespace BastionMod.Survivors.Bastion
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(Primary)),
                 activationStateMachineName = "Bastion",
-                interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+                requiredStock = 0,
+                stockToConsume = 0
+
+            });
+
+            SteppedSkillDef assaultPrimaryDef = Skills.CreateSkillDef<SteppedSkillDef>(new SkillDefInfo
+            {
+                skillName = "BastionReconPrimary",
+                skillNameToken = Bastion_PREFIX + "PRIMARY_ASSAULT_NAME",
+                skillDescriptionToken = Bastion_PREFIX + "PRIMARY_ASSAULT_DESCRIPTION",
+                skillIcon = assetBundle.LoadAsset<Sprite>("AssaultPrimary"),
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(AssaultPrimary)),
+                activationStateMachineName = "Bastion",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
+
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
+                forceSprintDuringState = false,
+            });
+            
+            SteppedSkillDef artilleryPrimaryDef = Skills.CreateSkillDef<SteppedSkillDef>(new SkillDefInfo
+            {
+                skillName = "BastionReconPrimary",
+                skillNameToken = Bastion_PREFIX + "PRIMARY_ASSAULT_NAME",
+                skillDescriptionToken = Bastion_PREFIX + "PRIMARY_ASSAULT_DESCRIPTION",
+                skillIcon = assetBundle.LoadAsset<Sprite>("ArtilleryFire"),
+
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ArtilleryPrimary)),
+                activationStateMachineName = "Bastion",
+                interruptPriority = EntityStates.InterruptPriority.Skill,
 
                 canceledFromSprinting = false,
                 cancelSprintingOnActivation = false,
                 forceSprintDuringState = false,
             });
 
-            SkillDef assaultPrimaryDef = Skills.CreateSkillDef<SkillDef>(new SkillDefInfo
-            (
-                "BastionAssaultPrimary",
-                Bastion_PREFIX + "PRIMARY_RECON_NAME",
-                Bastion_PREFIX + "PRIMARY_RECON_DESCRIPTION",
-                assetBundle.LoadAsset<Sprite>("Assault Primary"),
-                new EntityStates.SerializableEntityStateType(typeof(AssaultPrimary)),
-                "Bastion",
-                true
-            ));
-
-            BastionStaticValues.primary = primarySkillDef;
             BastionStaticValues.assaultPrimary = assaultPrimaryDef;
+            BastionStaticValues.artilleryPrimary = artilleryPrimaryDef;
 
             Skills.AddPrimarySkills(bodyPrefab, primarySkillDef);
         }
@@ -179,12 +202,12 @@ namespace BastionMod.Survivors.Bastion
             SkillDef secondarySkillDef1 = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "BastionKick",
-                skillNameToken = Bastion_PREFIX + "KICK_NAME",
-                skillDescriptionToken = Bastion_PREFIX + "KICK_DESC",
+                skillNameToken = Bastion_PREFIX + "SECONDARY_HEAL_NAME",
+                skillDescriptionToken = Bastion_PREFIX + "SECONDARY_HEAL_DESCRIPTION",
                 keywordTokens = new string[] { "" },
                 skillIcon = assetBundle.LoadAsset<Sprite>("heal"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Primary)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.HealSelf)),
                 activationStateMachineName = "Bastion",
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
 
@@ -192,8 +215,8 @@ namespace BastionMod.Survivors.Bastion
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
-                requiredStock = 0,
-                stockToConsume = 0,
+                requiredStock = 1,
+                stockToConsume = 1,
 
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
@@ -201,9 +224,9 @@ namespace BastionMod.Survivors.Bastion
                 mustKeyPress = false,
                 beginSkillCooldownOnSkillEnd = false,
 
-                isCombatSkill = true,
-                canceledFromSprinting = true,
-                cancelSprintingOnActivation = true,
+                isCombatSkill = false,
+                canceledFromSprinting = false,
+                cancelSprintingOnActivation = false,
                 forceSprintDuringState = false,
             });
 
@@ -214,24 +237,24 @@ namespace BastionMod.Survivors.Bastion
         {
             Skills.CreateGenericSkillWithSkillFamily(bodyPrefab, SkillSlot.Utility);
 
-            SkillDef utilitySkillDef1 = Skills.CreateSkillDef(new SkillDefInfo
+            SkillDef reconToAssaultDef = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "BastionAssaultMode",
-                skillNameToken = Bastion_PREFIX + "SLASH_NAME",
-                skillDescriptionToken = Bastion_PREFIX + "SLASH_DESC",
+                skillNameToken = Bastion_PREFIX + "UTILITY_ASSAULT_NAME",
+                skillDescriptionToken = Bastion_PREFIX + "UTILITY_ASSAULT_DESCRIPTION",
                 keywordTokens = new string[] { "KEYWORD_AGILE" },
                 skillIcon = assetBundle.LoadAsset<Sprite>("utility"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.TransitionToAssault)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.ReconToAssault)),
                 activationStateMachineName = "Bastion",
                 interruptPriority = EntityStates.InterruptPriority.Pain,
 
-                baseRechargeInterval = 0f,
+                baseRechargeInterval = 10f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
-                requiredStock = 0,
-                stockToConsume = 0,
+                requiredStock = 1,
+                stockToConsume = 1,
 
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
@@ -248,18 +271,29 @@ namespace BastionMod.Survivors.Bastion
             SkillDef assaultToReconDef = Skills.CreateSkillDef<SkillDef>(new SkillDefInfo
             (
                 "BastionReconPrimary",
-                Bastion_PREFIX + "PRIMARY_DAGGER_NAME",
-                Bastion_PREFIX + "PRIMARY_DAGGER_DESCRIPTION",
+                Bastion_PREFIX + "UTILITY_ASSAULTTORECON_NAME",
+                Bastion_PREFIX + "UTILITY_ASSAULTTORECON_DESCRIPTION",
                 assetBundle.LoadAsset<Sprite>("assault utitlity"),
                 new EntityStates.SerializableEntityStateType(typeof(AssaultToRecon)),
                 "Bastion",
                 true
             ));
+            
+            SkillDef artilleryToAssaultDef = Skills.CreateSkillDef<SkillDef>(new SkillDefInfo
+            (
+                "BastionReconPrimary",
+                Bastion_PREFIX + "UTILITY_ASSAULTTORECON_NAME",
+                Bastion_PREFIX + "UTILITY_ASSAULTTORECON_DESCRIPTION",
+                assetBundle.LoadAsset<Sprite>("artillery utility"),
+                new EntityStates.SerializableEntityStateType(typeof(ArtilleryToAssault)),
+                "Bastion",
+                true
+            ));
 
-            BastionStaticValues.utility = utilitySkillDef1;
             BastionStaticValues.assaultUtility = assaultToReconDef;
+            BastionStaticValues.artilleryUtilityAssault = artilleryToAssaultDef;
 
-            Skills.AddUtilitySkills(bodyPrefab, utilitySkillDef1);
+            Skills.AddUtilitySkills(bodyPrefab, reconToAssaultDef);
         }
 
         private void AddSpecialSkills()
@@ -269,21 +303,21 @@ namespace BastionMod.Survivors.Bastion
             SkillDef specialSkillDef1 = Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = "BastionHeavy",
-                skillNameToken = Bastion_PREFIX + "HEAVY_NAME",
-                skillDescriptionToken = Bastion_PREFIX + "HEAVY_DESC",
+                skillNameToken = Bastion_PREFIX + "SPECIAL_ARTILLERY_NAME",
+                skillDescriptionToken = Bastion_PREFIX + "SPECIAL_ARTILLERY_DESCRIPTION",
                 keywordTokens = new string[] { "KEYWORD_STUNNING" },
                 skillIcon = assetBundle.LoadAsset<Sprite>("Special"),
 
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Primary)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(ReconToArtillery)),
                 activationStateMachineName = "Bastion",
-                interruptPriority = EntityStates.InterruptPriority.Stun,
+                interruptPriority = EntityStates.InterruptPriority.Pain,
 
-                baseRechargeInterval = 0f,
+                baseRechargeInterval = 20f,
                 baseMaxStock = 1,
 
                 rechargeStock = 1,
-                requiredStock = 0,
-                stockToConsume = 0,
+                requiredStock = 1,
+                stockToConsume = 1,
 
                 resetCooldownTimerOnUse = false,
                 fullRestockOnAssign = true,
@@ -292,10 +326,35 @@ namespace BastionMod.Survivors.Bastion
                 beginSkillCooldownOnSkillEnd = false,
 
                 isCombatSkill = true,
-                canceledFromSprinting = false,
-                cancelSprintingOnActivation = false,
+                canceledFromSprinting = true,
+                cancelSprintingOnActivation = true,
                 forceSprintDuringState = false,
             });
+
+            SkillDef artilleryToReconDef = Skills.CreateSkillDef<SkillDef>(new SkillDefInfo
+            (
+                "BastionReconPrimary",
+                Bastion_PREFIX + "UTILITY_ASSAULTTORECON_NAME",
+                Bastion_PREFIX + "UTILITY_ASSAULTTORECON_DESCRIPTION",
+                assetBundle.LoadAsset<Sprite>("ArtilleryUnset"),
+                new EntityStates.SerializableEntityStateType(typeof(ArtilleryToRecon)),
+                "Bastion",
+                true
+            ));
+            
+            SkillDef assaultToArtilleryDef = Skills.CreateSkillDef<SkillDef>(new SkillDefInfo
+            (
+                "BastionReconPrimary",
+                Bastion_PREFIX + "UTILITY_ASSAULTTORECON_NAME",
+                Bastion_PREFIX + "UTILITY_ASSAULTTORECON_DESCRIPTION",
+                assetBundle.LoadAsset<Sprite>("Artillery to assault"),
+                new EntityStates.SerializableEntityStateType(typeof(AssaultToArtillery)),
+                "Bastion",
+                true
+            ));
+
+            BastionStaticValues.artilleryUnset = artilleryToReconDef;
+            BastionStaticValues.assaultSpecial = assaultToArtilleryDef;
 
             Skills.AddSpecialSkills(bodyPrefab, specialSkillDef1);
         }
@@ -385,7 +444,10 @@ namespace BastionMod.Survivors.Bastion
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
         {
-            
+            if (sender.HasBuff(BastionBuffs.turretArmorBuff))
+            {
+                args.armorAdd += 150f;
+            }
         }
     }
 }

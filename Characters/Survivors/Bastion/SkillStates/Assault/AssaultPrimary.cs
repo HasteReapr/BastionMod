@@ -8,10 +8,10 @@ namespace BastionMod.Survivors.Bastion.SkillStates
     {
         public float baseDuration = 0.1f;
         public float procCoef = 1;
-        public float damageCoef = BastionStaticValues.primaryCoef;
+        public float damageCoef = BastionStaticValues.assaultCoef;
 
         private float duration;
-        private float recoil = 0.2f;
+        private float recoil = 0.25f;
         private float range = 1024;
         private bool hasFired = false;
         public static GameObject tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
@@ -22,7 +22,6 @@ namespace BastionMod.Survivors.Bastion.SkillStates
         {
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
-            characterBody.SetAimTimer(2);
 
             PlayAnimation("FullBody, Override", "AssaultFire");
         }
@@ -34,7 +33,7 @@ namespace BastionMod.Survivors.Bastion.SkillStates
             if (!hasFired)
                 Fire();
 
-            if (fixedAge > duration && isAuthority)
+            if (fixedAge > duration && isAuthority && hasFired)
             {
                 outer.SetNextStateToMain();
                 return;
@@ -54,7 +53,6 @@ namespace BastionMod.Survivors.Bastion.SkillStates
 
                 characterBody.AddSpreadBloom(1.5f);
                 EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, gameObject, muzzleString, false);
-                Util.PlaySound("HenryShootPistol", gameObject);
 
                 if (isAuthority)
                 {
@@ -71,7 +69,7 @@ namespace BastionMod.Survivors.Bastion.SkillStates
                         damageType = DamageTypeCombo.GenericSecondary,
                         falloffModel = BulletAttack.FalloffModel.None,
                         maxDistance = range,
-                        force = 400f,
+                        force = 150f,
                         hitMask = LayerIndex.CommonMasks.bullet,
                         minSpread = 0f,
                         maxSpread = 0f,

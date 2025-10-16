@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BastionMod.Survivors.Bastion.SkillStates
 {
-    public class AssaultToRecon : BaseSkillState
+    public class AssaultToRecon : ShiftingSkill
     {
         //This state only serves to play the transition animation and to replace the skills.
         public static float Duration = 0.3f; 
@@ -14,17 +14,10 @@ namespace BastionMod.Survivors.Bastion.SkillStates
             base.OnEnter();
 
             PlayAnimation("FullBody, Override", "AssaultToRecon");
+            PlayAnimation("AimPitch", "PitchControl");
+            PlayAnimation("AimYaw", "YawControl");
 
-            //Override the recon skills with the assault skills, should be pretty simple
-            if (base.skillLocator.primary != null)
-            {
-                base.skillLocator.primary.UnsetSkillOverride(gameObject, BastionStaticValues.assaultPrimary, GenericSkill.SkillOverridePriority.Network);
-            }
-
-            if (base.skillLocator.utility != null)
-            {
-                base.skillLocator.utility.UnsetSkillOverride(gameObject, BastionStaticValues.assaultUtility, GenericSkill.SkillOverridePriority.Network);
-            }
+            SetToRecon();
         }
 
         public override void FixedUpdate()
@@ -40,7 +33,6 @@ namespace BastionMod.Survivors.Bastion.SkillStates
         {
             base.OnExit();
             GetModelAnimator().SetLayerWeight((int)BastionSurvivor.BodyAnimatorLayer.Assault, 0);
-            GetModelAnimator().SetLayerWeight((int)BastionSurvivor.BodyAnimatorLayer.AssaultPitch, 0);
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

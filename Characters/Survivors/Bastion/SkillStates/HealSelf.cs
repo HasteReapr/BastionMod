@@ -1,10 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using EntityStates;
+using RoR2;
+using UnityEngine;
 
-namespace BastionMod.Characters.Survivors.Bastion.SkillStates
+namespace BastionMod.Survivors.Bastion.SkillStates
 {
-    internal class HealSelf
+    public class HealSelf : BaseSkillState
     {
+        public override void OnEnter()
+        {
+            base.OnEnter();
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+        }
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.Pain;
+        }
     }
 }

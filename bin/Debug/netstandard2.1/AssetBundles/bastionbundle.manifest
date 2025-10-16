@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2132618180
+CRC: 1807640935
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2de023938c94b66cc62cfadb1f884418
+    Hash: 1667009edc17692ce6fc5240349c3491
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 91f2a88d0df6b37899a95c1d98e54ef6
+    Hash: e7a673ce773e088cd36d5c14aa8f3e3f
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -22,6 +22,8 @@ ClassTypes:
 - Class: 48
   Script: {instanceID: 0}
 - Class: 74
+  Script: {instanceID: 0}
+- Class: 90
   Script: {instanceID: 0}
 - Class: 91
   Script: {instanceID: 0}
@@ -49,24 +51,28 @@ Assets:
 - Assets/BastionAssets/BastionBundle/displayBastion.prefab
 - Assets/BastionAssets/BastionBundle/Materials/matBastion.mat
 - Assets/BastionAssets/BastionBundle/Textures/Icons/Primary.png
-- Assets/BastionAssets/BastionBundle/Textures/Icons/Assault Primary.png
 - Assets/BastionAssets/BastionBundle/Textures/Icons/grenade.png
 - Assets/BastionAssets/BastionBundle/Animation/MaskPitch.mask
 - Assets/BastionAssets/BastionBundle/Animation/UpperBody.mask
 - Assets/BastionAssets/BastionBundle/Textures/Icons/utility.png
 - Assets/BastionAssets/BastionBundle/Textures/texBastionBirdDiffuse.png
+- Assets/BastionAssets/BastionBundle/Textures/Icons/ArtilleryUnset.png
 - Assets/BastionAssets/BastionBundle/Textures/texBastionDiffuse.png
 - Assets/BastionAssets/BastionBundle/Textures/Icons/assault utitlity.png
 - Assets/BastionAssets/BastionBundle/Animation/animBastion.controller
 - Assets/BastionAssets/BastionBundle/Textures/texBastionBirdNormal.png
+- Assets/BastionAssets/BastionBundle/Textures/Icons/artillery utility.png
 - Assets/BastionAssets/BastionBundle/Textures/texBastionEmission.png
 - Assets/BastionAssets/BastionBundle/Textures/texBastionBirdEmission.png
 - Assets/BastionAssets/BastionBundle/Materials/matBastionHeal.mat
 - Assets/BastionAssets/BastionBundle/Textures/Icons/heal.png
 - Assets/BastionAssets/BastionBundle/mdlBastion.prefab
 - Assets/BastionAssets/BastionBundle/Materials/matGanamede.mat
+- Assets/BastionAssets/BastionBundle/Textures/Icons/Artillery to assault.png
 - Assets/BastionAssets/BastionBundle/Textures/texBastionNormal.png
 - Assets/BastionAssets/BastionBundle/Textures/texHealRingDiffuse.png
 - Assets/BastionAssets/BastionBundle/Textures/Icons/Special.png
+- Assets/BastionAssets/BastionBundle/Textures/Icons/Assault Primary.png
+- Assets/BastionAssets/BastionBundle/Textures/Icons/ArtilleryFire.png
 - Assets/BastionAssets/BastionBundle/Animation/MaskYaw.mask
 Dependencies: []

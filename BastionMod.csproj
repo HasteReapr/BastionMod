@@ -57,7 +57,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Characters\Survivors\Bastion\SkillStates\Artillery\" />
+	  <Folder Include="Characters\Survivors\Bastion\Components\" />
 	  <Folder Include="Characters\Survivors\Bastion\SkillStates\Bombard\" />
 	</ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

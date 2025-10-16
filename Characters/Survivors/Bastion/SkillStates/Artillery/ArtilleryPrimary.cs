@@ -4,37 +4,36 @@ using UnityEngine;
 
 namespace BastionMod.Survivors.Bastion.SkillStates
 {
-    public  class Primary : BaseSkillState
+    public class ArtilleryPrimary : BaseSkillState
     {
-        public float baseDuration = 0.2f;
+        public float baseDuration = 0.1f;
         public float procCoef = 1;
-        public float damageCoef = BastionStaticValues.primaryCoef;
+        public float damageCoef = BastionStaticValues.assaultCoef;
 
-        private float duration = 0.15f;
-        private float recoil = 0.4f;
-        private float range = 256;
+        private float duration;
+        private float recoil = 0.25f;
+        private float range = 1024;
         private bool hasFired = false;
         public static GameObject tracerEffectPrefab = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerGoldGat");
 
-        private string muzzleString = "PrimaryMuzzle";
+        private string muzzleString = "ArtilleryMuzzle";
 
         public override void OnEnter()
         {
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
-            characterBody.SetAimTimer(duration + 0.1f);
 
-            PlayAnimation("Gesture, Override", "Primary");
+            PlayAnimation("FullBody, Override", "ArtilleryIdle");
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
-            if(!hasFired)
+            if (!hasFired)
                 Fire();
 
-            if(fixedAge > duration && isAuthority && hasFired)
+            if (fixedAge > duration && isAuthority && hasFired)
             {
                 outer.SetNextStateToMain();
                 return;
@@ -70,7 +69,7 @@ namespace BastionMod.Survivors.Bastion.SkillStates
                         damageType = DamageTypeCombo.GenericSecondary,
                         falloffModel = BulletAttack.FalloffModel.None,
                         maxDistance = range,
-                        force = 225f,
+                        force = 150f,
                         hitMask = LayerIndex.CommonMasks.bullet,
                         minSpread = 0f,
                         maxSpread = 0f,
