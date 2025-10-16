@@ -17,10 +17,7 @@ namespace BastionMod.Survivors.Bastion
         {
             Assault = 1,
             Artillery = 2,
-            Bombard = 3,
-            AssaultPitch = 8,
-            BombardPitch = 9,
-            BombardYaw = 11
+            Bombard = 3
         }
         public override string assetBundleName => "bastionbundle";
 
@@ -115,23 +112,7 @@ namespace BastionMod.Survivors.Bastion
             InitializeSkins();
             InitializeCharacterMaster();
 
-            AdditionalBodySetup();
-
             AddHooks();
-        }
-
-        private void AdditionalBodySetup()
-        {
-            AddHitboxes();
-
-            //bodyPrefab.AddComponent<BastionMain>();
-            //if (displayPrefab) displayPrefab.AddComponent<BastionCSSComp>();
-        }
-
-        public void AddHitboxes()
-        {
-            //example of how to create a HitBoxGroup. see summary for more details
-            //Prefabs.SetupHitBoxGroup(characterModelObject, "PunchGroup", "PunchHurtbox");
         }
 
         public override void InitializeEntityStateMachines() 
@@ -148,63 +129,10 @@ namespace BastionMod.Survivors.Bastion
         {
             Skills.ClearGenericSkills(bodyPrefab);
 
-            //AddPassiveSkill();
-
             AddPrimarySkills();
             AddSecondarySkills();
             AddUtiitySkills();
             AddSpecialSkills();
-        }
-
-        private void AddPassiveSkill()
-        {
-            //option 1. fake passive icon just to describe functionality we will implement elsewhere
-            /*bodyPrefab.GetComponent<SkillLocator>().passiveSkill = new SkillLocator.PassiveSkill
-            {
-                enabled = true,
-                skillNameToken = Bastion_PREFIX + "PASSIVE_NAME",
-                skillDescriptionToken = Bastion_PREFIX + "PASSIVE_DESCRIPTION",
-                keywordToken = new string[] { "KEYWORD_COOLDOWN", "KEYWORD_SPEED" },
-                icon = assetBundle.LoadAsset<Sprite>("texPassiveIcon"),
-            };*/
-
-            //option 2. a new SkillFamily for a passive, used if you want multiple selectable passives
-            GenericSkill passiveGenericSkill = Skills.CreateGenericSkillWithSkillFamily(bodyPrefab, "PassiveSkill");
-            SkillDef passiveSkillDef1 = Skills.CreateSkillDef(new SkillDefInfo
-            {
-                skillName = "BastionPassive",
-                skillNameToken = Bastion_PREFIX + "PASSIVE_NAME",
-                skillDescriptionToken = Bastion_PREFIX + "PASSIVE_DESCRIPTION",
-                keywordTokens = new string[] { "KEYWORD_COOLDOWN", "KEYWORD_SPEED", "KEYWORD_BIND" },
-                skillIcon = assetBundle.LoadAsset<Sprite>("texPassiveIcon"),
-
-                //unless you're somehow activating your passive like a skill, none of the following is needed.
-                //but that's just me saying things. the tools are here at your disposal to do whatever you like with
-
-                //activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Shoot)),
-                //activationStateMachineName = "Weapon1",
-                //interruptPriority = EntityStates.InterruptPriority.Skill,
-
-                //baseRechargeInterval = 1f,
-                //baseMaxStock = 1,
-
-                //rechargeStock = 1,
-                //requiredStock = 1,
-                //stockToConsume = 1,
-
-                //resetCooldownTimerOnUse = false,
-                //fullRestockOnAssign = true,
-                //dontAllowPastMaxStocks = false,
-                //mustKeyPress = false,
-                //beginSkillCooldownOnSkillEnd = false,
-
-                //isCombatSkill = true,
-                //canceledFromSprinting = false,
-                //cancelSprintingOnActivation = false,
-                //forceSprintDuringState = false,
-
-            });
-            Skills.AddSkillsToFamily(passiveGenericSkill.skillFamily, passiveSkillDef1);
         }
 
         private void AddPrimarySkills()

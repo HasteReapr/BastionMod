@@ -1,0 +1,1 @@
+"# BastionMod"  initgit add README.mdgit commit -m "first commit"git branch -M maingit remote add origin git@github.com:HasteReapr/BastionMod.gitgit push -u origin main
