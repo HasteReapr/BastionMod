@@ -16,8 +16,11 @@ namespace BastionMod.Survivors.Bastion
         {
             Assault = 1,
             Artillery = 2,
-            Bombard = 3
+            Bombard = 3,
+            Pitch = 7,
+            Yaw = 8,
         }
+
         public override string assetBundleName => "bastionbundle";
 
         public override string bodyName => "BastionRobot";
@@ -162,7 +165,7 @@ namespace BastionMod.Survivors.Bastion
                 skillName = "BastionReconPrimary",
                 skillNameToken = Bastion_PREFIX + "PRIMARY_ASSAULT_NAME",
                 skillDescriptionToken = Bastion_PREFIX + "PRIMARY_ASSAULT_DESCRIPTION",
-                skillIcon = assetBundle.LoadAsset<Sprite>("AssaultPrimary"),
+                skillIcon = assetBundle.LoadAsset<Sprite>("Assault Primary"),
 
                 activationState = new EntityStates.SerializableEntityStateType(typeof(AssaultPrimary)),
                 activationStateMachineName = "Bastion",
@@ -284,14 +287,15 @@ namespace BastionMod.Survivors.Bastion
                 "BastionReconPrimary",
                 Bastion_PREFIX + "UTILITY_ASSAULTTORECON_NAME",
                 Bastion_PREFIX + "UTILITY_ASSAULTTORECON_DESCRIPTION",
-                assetBundle.LoadAsset<Sprite>("artillery utility"),
+                assetBundle.LoadAsset<Sprite>("aa"),
                 new EntityStates.SerializableEntityStateType(typeof(ArtilleryToAssault)),
                 "Bastion",
                 true
             ));
 
-            BastionStaticValues.assaultUtility = assaultToReconDef;
-            BastionStaticValues.artilleryUtilityAssault = artilleryToAssaultDef;
+            BastionStaticValues.assaultToRecon = assaultToReconDef;
+
+            BastionStaticValues.artilleryToAssault = artilleryToAssaultDef;
 
             Skills.AddUtilitySkills(bodyPrefab, reconToAssaultDef);
         }
@@ -347,14 +351,14 @@ namespace BastionMod.Survivors.Bastion
                 "BastionReconPrimary",
                 Bastion_PREFIX + "UTILITY_ASSAULTTORECON_NAME",
                 Bastion_PREFIX + "UTILITY_ASSAULTTORECON_DESCRIPTION",
-                assetBundle.LoadAsset<Sprite>("Artillery to assault"),
+                assetBundle.LoadAsset<Sprite>("Assault to Artillery"),
                 new EntityStates.SerializableEntityStateType(typeof(AssaultToArtillery)),
                 "Bastion",
                 true
             ));
 
-            BastionStaticValues.artilleryUnset = artilleryToReconDef;
-            BastionStaticValues.assaultSpecial = assaultToArtilleryDef;
+            BastionStaticValues.artilleryToRecon = artilleryToReconDef;
+            BastionStaticValues.assaultToArtillery = assaultToArtilleryDef;
 
             Skills.AddSpecialSkills(bodyPrefab, specialSkillDef1);
         }

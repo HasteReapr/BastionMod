@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1807640935
+CRC: 3885337647
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1667009edc17692ce6fc5240349c3491
+    Hash: 1dd9da9af28013e4207330721d6f2c32
   TypeTreeHash:
     serializedVersion: 2
     Hash: e7a673ce773e088cd36d5c14aa8f3e3f
@@ -51,6 +51,7 @@ Assets:
 - Assets/BastionAssets/BastionBundle/displayBastion.prefab
 - Assets/BastionAssets/BastionBundle/Materials/matBastion.mat
 - Assets/BastionAssets/BastionBundle/Textures/Icons/Primary.png
+- Assets/BastionAssets/BastionBundle/Textures/Icons/Assault To Artillery.png
 - Assets/BastionAssets/BastionBundle/Textures/Icons/grenade.png
 - Assets/BastionAssets/BastionBundle/Animation/MaskPitch.mask
 - Assets/BastionAssets/BastionBundle/Animation/UpperBody.mask
@@ -75,4 +76,5 @@ Assets:
 - Assets/BastionAssets/BastionBundle/Textures/Icons/Assault Primary.png
 - Assets/BastionAssets/BastionBundle/Textures/Icons/ArtilleryFire.png
 - Assets/BastionAssets/BastionBundle/Animation/MaskYaw.mask
+- Assets/BastionAssets/BastionBundle/Textures/Icons/aa.png
 Dependencies: []

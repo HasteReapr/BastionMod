@@ -1,4 +1,5 @@
 ﻿using System;
+using BastionMod.Survivors.Bastion.SkillStates;
 using RoR2.Skills;
 
 namespace BastionMod.Survivors.Bastion
@@ -20,14 +21,28 @@ namespace BastionMod.Survivors.Bastion
         internal static SkillDef artilleryPrimary;
         internal static SkillDef bombardPrimary;
 
-        internal static SkillDef assaultUtility;
+        internal static SkillDef assaultToRecon;
         //Artillery has 2 skills because Assault and Bombard are interhchangable.
-        internal static SkillDef artilleryUtilityAssault;
+        internal static SkillDef artilleryToAssault;
         internal static SkillDef artilleryUtilityBombard;
         internal static SkillDef bombardUtility;
 
-        internal static SkillDef artilleryUnset;
-        internal static SkillDef assaultSpecial;
+        internal static SkillDef artilleryToRecon;
+        internal static SkillDef assaultToArtillery;
         internal static SkillDef bombardSpecial;
+
+        internal static BastionStateDef AssaultDef = new BastionStateDef
+        {
+            primary = assaultPrimary,
+            utility = assaultToRecon,
+            special = assaultToArtillery
+        };
+        
+        internal static BastionStateDef ArtilleryDef = new BastionStateDef
+        {
+            primary = artilleryPrimary,
+            utility = artilleryToAssault,
+            special = artilleryToRecon
+        };
     }
 }

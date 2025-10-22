@@ -21,8 +21,8 @@ namespace BastionMod.Survivors.Bastion.SkillStates
 
             if (skillLocator.special != null)
             {
-                skillLocator.utility.UnsetSkillOverride(gameObject, BastionStaticValues.assaultSpecial, GenericSkill.SkillOverridePriority.Network);
-                skillLocator.utility.UnsetSkillOverride(gameObject, BastionStaticValues.artilleryUnset, GenericSkill.SkillOverridePriority.Network);
+                skillLocator.utility.UnsetSkillOverride(gameObject, BastionStaticValues.assaultToArtillery, GenericSkill.SkillOverridePriority.Network);
+                skillLocator.utility.UnsetSkillOverride(gameObject, BastionStaticValues.artilleryToRecon, GenericSkill.SkillOverridePriority.Network);
             }
         }
 
@@ -44,9 +44,9 @@ namespace BastionMod.Survivors.Bastion.SkillStates
 
             if (skillLocator.special != null)
             {
-                skillLocator.utility.UnsetSkillOverride(gameObject, BastionStaticValues.artilleryUnset, GenericSkill.SkillOverridePriority.Network);
+                skillLocator.utility.UnsetSkillOverride(gameObject, BastionStaticValues.artilleryToRecon, GenericSkill.SkillOverridePriority.Network);
 
-                skillLocator.utility.SetSkillOverride(gameObject, BastionStaticValues.assaultSpecial, GenericSkill.SkillOverridePriority.Network);
+                skillLocator.utility.SetSkillOverride(gameObject, BastionStaticValues.assaultToArtillery, GenericSkill.SkillOverridePriority.Network);
             }
         }
 
@@ -68,9 +68,9 @@ namespace BastionMod.Survivors.Bastion.SkillStates
 
             if (skillLocator.special != null)
             {
-                skillLocator.utility.UnsetSkillOverride(gameObject, BastionStaticValues.assaultSpecial, GenericSkill.SkillOverridePriority.Network);
+                skillLocator.utility.UnsetSkillOverride(gameObject, BastionStaticValues.assaultToArtillery, GenericSkill.SkillOverridePriority.Network);
 
-                skillLocator.utility.SetSkillOverride(gameObject, BastionStaticValues.artilleryUnset, GenericSkill.SkillOverridePriority.Network);
+                skillLocator.utility.SetSkillOverride(gameObject, BastionStaticValues.artilleryToRecon, GenericSkill.SkillOverridePriority.Network);
             }
         }
     }

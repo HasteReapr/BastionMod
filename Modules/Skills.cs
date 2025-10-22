@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using BastionMod;
 using UnityEngine;
+using BastionMod.Survivors.Bastion.SkillStates;
 
 namespace BastionMod.Modules
 {
@@ -191,6 +192,28 @@ namespace BastionMod.Modules
             return skillDef;
         }
         #endregion skilldefs
+
+        #region BastionSkillStuff
+        public static void SetStateSkill(this GenericSkill skill, SkillDef skillDef, GenericSkill.SkillOverridePriority priority = GenericSkill.SkillOverridePriority.Replacement) =>
+            skill.SetSkillOverride(skill.gameObject, skillDef, priority);
+
+        public static void UnsetStateSkill(this GenericSkill skill, SkillDef skillDef, GenericSkill.SkillOverridePriority priority = GenericSkill.SkillOverridePriority.Replacement) =>
+            skill.UnsetSkillOverride(skill.gameObject, skillDef, priority);
+
+        public static void SetStateSkills(this SkillLocator skillLoc, BastionStateDef stateDef, GenericSkill.SkillOverridePriority priority = GenericSkill.SkillOverridePriority.Replacement)
+        {
+            skillLoc.primary.SetStateSkill(stateDef.primary, priority);
+            skillLoc.utility.SetStateSkill(stateDef.utility, priority);
+            skillLoc.special.SetStateSkill(stateDef.special, priority);
+        }
+        
+        public static void UnsetStateSkills(this SkillLocator skillLoc, BastionStateDef stateDef, GenericSkill.SkillOverridePriority priority = GenericSkill.SkillOverridePriority.Replacement)
+        {
+            skillLoc.primary.UnsetStateSkill(stateDef.primary, priority);
+            skillLoc.utility.UnsetStateSkill(stateDef.utility, priority);
+            skillLoc.special.UnsetStateSkill(stateDef.special, priority);
+        }
+        #endregion
     }
 
     /// <summary>

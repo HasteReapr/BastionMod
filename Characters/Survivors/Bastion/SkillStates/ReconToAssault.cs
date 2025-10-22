@@ -1,4 +1,5 @@
-﻿using EntityStates;
+﻿using BastionMod.Modules;
+using EntityStates;
 using RoR2;
 using UnityEngine;
 
@@ -17,21 +18,7 @@ namespace BastionMod.Survivors.Bastion.SkillStates
             PlayAnimation("AimPitch", "PitchControl Assault");
             PlayAnimation("AimYaw", "YawControl Assault");
 
-            //Override the recon skills with the assault skills, should be pretty simple
-            if (base.skillLocator.primary != null)
-            {
-                base.skillLocator.primary.SetSkillOverride(gameObject, BastionStaticValues.assaultPrimary, GenericSkill.SkillOverridePriority.Network);
-            }
-
-            if (base.skillLocator.utility != null)
-            {
-                base.skillLocator.utility.SetSkillOverride(gameObject, BastionStaticValues.assaultUtility, GenericSkill.SkillOverridePriority.Network);
-            }
-
-            if (base.skillLocator.utility != null)
-            {
-                base.skillLocator.utility.SetSkillOverride(gameObject, BastionStaticValues.assaultSpecial, GenericSkill.SkillOverridePriority.Network);
-            }
+            Skills.SetStateSkills(this.skillLocator, BastionStaticValues.AssaultDef);
         }
 
         public override void FixedUpdate()

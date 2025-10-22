@@ -1,6 +1,7 @@
 ﻿using EntityStates;
 using RoR2;
 using UnityEngine;
+using BastionMod.Modules;
 
 namespace BastionMod.Survivors.Bastion.SkillStates
 {
@@ -14,30 +15,9 @@ namespace BastionMod.Survivors.Bastion.SkillStates
             base.OnEnter();
 
             PlayAnimation("FullBody, Override", "ArtilleryToAssault");
-            GetModelAnimator().SetLayerWeight((int)BastionSurvivor.BodyAnimatorLayer.Assault, 1);
             GetModelAnimator().SetLayerWeight((int)BastionSurvivor.BodyAnimatorLayer.Artillery, 0);
 
-            //Override the recon skills with the assault skills, should be pretty simple
-            if (base.skillLocator.primary != null)
-            {
-                base.skillLocator.primary.UnsetSkillOverride(gameObject, BastionStaticValues.artilleryPrimary, GenericSkill.SkillOverridePriority.Network);
-
-                base.skillLocator.primary.SetSkillOverride(gameObject, BastionStaticValues.assaultPrimary, GenericSkill.SkillOverridePriority.Network);
-            }
-
-            if (base.skillLocator.utility != null)
-            {
-                base.skillLocator.utility.UnsetSkillOverride(gameObject, BastionStaticValues.artilleryUtilityAssault, GenericSkill.SkillOverridePriority.Network);
-
-                base.skillLocator.utility.SetSkillOverride(gameObject, BastionStaticValues.assaultUtility, GenericSkill.SkillOverridePriority.Network);
-            }
-
-            if (base.skillLocator.special != null)
-            {
-                base.skillLocator.special.UnsetSkillOverride(gameObject, BastionStaticValues.artilleryUnset, GenericSkill.SkillOverridePriority.Network);
-
-                base.skillLocator.special.SetSkillOverride(gameObject, BastionStaticValues.assaultSpecial, GenericSkill.SkillOverridePriority.Network);
-            }
+            Skills.UnsetStateSkills(this.skillLocator, BastionStaticValues.ArtilleryDef);
         }
 
         public override void FixedUpdate()
@@ -52,6 +32,16 @@ namespace BastionMod.Survivors.Bastion.SkillStates
         public override void OnExit()
         {
             base.OnExit();
+
+            //Then we go to assault
+            PlayAnimation("AimPitch", "PitchControl Assault");
+            PlayAnimation("AimYaw", "YawControl Assault");
+
+            GetModelAnimator().SetLayerWeight((int)BastionSurvivor.BodyAnimatorLayer.Assault, 1);
+            GetModelAnimator().SetLayerWeight((int)BastionSurvivor.BodyAnimatorLayer.Yaw, 1);
+            GetModelAnimator().SetLayerWeight((int)BastionSurvivor.BodyAnimatorLayer.Pitch, 1);
+
+            Skills.SetStateSkills(this.skillLocator, BastionStaticValues.AssaultDef);
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

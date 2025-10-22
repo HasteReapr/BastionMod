@@ -1,10 +1,11 @@
-﻿using EntityStates;
+﻿using BastionMod.Modules;
+using EntityStates;
 using RoR2;
 using UnityEngine;
 
 namespace BastionMod.Survivors.Bastion.SkillStates
 {
-    public class AssaultToRecon : ShiftingSkill
+    public class AssaultToRecon : BaseSkillState
     {
         //This state only serves to play the transition animation and to replace the skills.
         public static float Duration = 0.3f; 
@@ -17,7 +18,7 @@ namespace BastionMod.Survivors.Bastion.SkillStates
             PlayAnimation("AimPitch", "PitchControl");
             PlayAnimation("AimYaw", "YawControl");
 
-            SetToRecon();
+            Skills.UnsetStateSkills(this.skillLocator, BastionStaticValues.AssaultDef);
         }
 
         public override void FixedUpdate()
